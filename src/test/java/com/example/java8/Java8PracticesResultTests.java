@@ -4,10 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
+import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -51,15 +55,12 @@ class Java8PracticesResultTests {
 	@Test
 	void practice03() {
 		List<String> list = Arrays.asList("one", "two");
+//		Stream<String> stream2 = list.stream();
 		/* 
 		 * expected output: 
 		 * o n e t w o ...
 		 */
 //		list.stream().map(item -> item.split("")).flatMap(item -> Stream.of(item)).forEach(item -> System.out.print(item + " "));
-		
-		list.stream().map(item -> item.split(""))
-					.flatMap(Arrays::stream)
-					.forEach(item -> System.out.print(item + " "));
 	}
 	
 	@Test
@@ -73,10 +74,18 @@ class Java8PracticesResultTests {
 		 * o n e t w o t h r e e f o u r ...
 		 */
 		
-		list.stream().flatMap(Collection::stream)
-					.map(item -> item.split(""))
-					.flatMap(Arrays::stream)
-					.forEach(item -> System.out.print(item + " "));;
+//		list.stream().flatMap(Collection::stream)
+//					.map(item -> item.split(""))
+//					.flatMap(Arrays::stream)
+//					.forEach(item -> System.out.print(item + " "));;
+					
+		Stream<String> flatMap = list.stream().flatMap(item -> item.stream());
+		Stream<String[]> map = flatMap.map(item -> item.split(""));
+		Stream<String> aa = map.flatMap(Arrays::stream);
+		
+		
+		aa.forEach(System.out::println);
+		
 	}
 	
 	@Test
@@ -205,6 +214,16 @@ class Java8PracticesResultTests {
 		 */
 		List<Integer> ret = list.stream().filter(item -> item % 2 == 0).map(item -> item * 2).sorted().collect(Collectors.toList());
 		System.out.println(ret);
+		
+		list = Arrays.asList(4, 2, 2, 7, 9, 13, 10);
+		/* conditions:: find the first number that greater than 5
+		 * if nothing is found, print -1
+		 * expected output: 
+		 * 7
+		 */
+		int condition = 5;
+		Integer result = list.stream().filter(item -> item > condition).findFirst().orElse(-1);
+		System.out.println(result);
 	}
 	
 	@Test
@@ -294,6 +313,60 @@ class Java8PracticesResultTests {
 			Person person = people.get(i);
 			System.out.println(person);
 		});
+	}
+	
+	@Test
+	public void practice17_01() throws Exception {
+		/* loop list with index
+		 */
+		ImmutableList<Person> people = MockData.getPeople();
+//		IntStream.range(0, people.size()).forEach(i -> {
+//			Person person = people.get(i);
+//			System.out.println(person);
+//		});
+		
+		List<Integer> ids = Arrays.asList(1,2,3);
+		ids.stream().flatMap(id -> people.stream().filter(u -> u.getId() == id))
+					.map(u -> u.getFirstName())
+					.forEach(System.out::println);
+		
+		people.stream().filter(u -> ids.stream().anyMatch(id -> id == u.getId()))
+					.forEach(System.out::println);
+	}
+	
+	@Test
+	public void practice18() throws Exception {
+		Stack<Integer> stack = new Stack<>();
+		stack.push(19);
+		stack.push(4);
+		stack.push(0);
+		stack.push(22);
+		stack.push(15);
+		stack.forEach(System.out::println);
+		System.out.println("stack.pop():: " + stack.pop());
+		stack.forEach(System.out::println);
+	}
+	
+	@Test
+	public void practice19() throws Exception {
+		
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(19);
+		queue.add(4);
+		queue.add(0);
+		queue.add(22);
+		queue.add(15);
+		queue.forEach(System.out::println);
+		System.out.println("queue.poll():: " + queue.poll());
+		queue.forEach(System.out::println);
+	}
+	
+	@Test
+	public void practice20() throws Exception {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("FB", 1);
+		map.put("Ea", 2);
+		System.out.println("Aaa");
 	}
 	
 }
