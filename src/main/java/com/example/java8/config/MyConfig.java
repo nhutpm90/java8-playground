@@ -1,14 +1,13 @@
 package com.example.java8.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-
-import com.example.java8.entity.Vehicle;
 
 @Configuration
-@ComponentScan(basePackages = "com.example.java8.entity")
+@ComponentScan(basePackages = {"com.example.java8.springcore.assignment.implementation",
+            "com.example.java8.springcore.assignment.services"})
+@ComponentScan(basePackageClasses = {com.example.java8.springcore.assignment.beans.Vehicle.class,
+		com.example.java8.springcore.assignment.beans.Person.class})
 public class MyConfig {
 
 //	@Bean

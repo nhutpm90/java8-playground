@@ -1,14 +1,13 @@
 package com.example.java8;
 
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.example.java8.config.MyConfig;
-import com.example.java8.entity.Employee;
-import com.example.java8.entity.Person;
-import com.example.java8.entity.Vehicle;
+import com.example.java8.springcore.assignment.beans.Person;
+import com.example.java8.springcore.assignment.beans.Vehicle;
+
 
 @SpringBootApplication
 public class Java8PlaygroundApplication {
@@ -66,6 +65,19 @@ public class Java8PlaygroundApplication {
 //		System.out.println("after change vehicle name to yamaha");
 //		System.out.println("employeeBean:: " + emp);
 //		System.out.println("anotherEmployeeBean:: " + anotherEmp);
+		
+		
+		
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
+        String[] persons = context.getBeanNamesForType(Person.class);
+        Person person = context.getBean(Person.class);
+        String[] names = context.getBeanNamesForType(Vehicle.class);
+        
+        /*Vehicle vehicle = context.getBean(Vehicle.class);
+        vehicle.getVehicleServices().playMusic();
+        vehicle.getVehicleServices().moveVehicle();*/
+        person.getVehicle().getVehicleServices().playMusic();
+        person.getVehicle().getVehicleServices().moveVehicle();
 		SpringApplication.run(Java8PlaygroundApplication.class, args);
 	}
 
