@@ -46,8 +46,8 @@ class Java8Practices_01_ResultTests {
 		
 		// gerenate 5 random number
 		// using Stream.generate
-//		list = Stream.generate(new Random()::nextInt).limit(5).collect(Collectors.toList());
 //		list = Stream.generate(
+//		list = Stream.generate(new Random()::nextInt).limit(5).collect(Collectors.toList());
 		
 		// Create an array from 10 to 50
 		// using Stream.iterate
@@ -404,13 +404,4 @@ class Java8Practices_01_ResultTests {
 		System.out.println("resultFromThread:: " + resultFromThread);
 		System.out.println("mainthread:: finish all");
 	}
-	
-	@Test
-	public void practice20() throws Exception {
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("FB", 1);
-		map.put("Ea", 2);
-		System.out.println("Aaa");
-	}
-	
 }
